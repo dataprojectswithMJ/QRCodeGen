@@ -21,26 +21,40 @@ def main():
 
     st.title("")
 
-    st.header('Generate code')
 
-    data = st.text_area('What do you want to encode?')
-    filename = f'code_{random.randint(1000, 999999)}.png'
-    encrypt = st.button('Generate QR code')
+    with st.expander('Generated code'):
+        st.header('Generate code')
 
-    if encrypt:
-        img = qrcode.make(data)
-        img.save(filename)
-        st.image(filename)
+        data = st.text_area('What do you want to encode?')
+        filename = f'code_{random.randint(1000, 999999)}.png'
+        encrypt = st.button('Generate QR code')
 
-        with open(filename, "rb") as file:
-            btn = st.download_button(
-                label="Download QR code",
-                data=file,
-                file_name=filename,
-                mime="image/png"
-            )
+        if encrypt:
+            img = qrcode.make(data)
+            img.save(filename)
+            st.image(filename)
+
+            with open(filename, "rb") as file:
+                btn = st.download_button(
+                    label="Download QR code",
+                    data=file,
+                    file_name=filename,
+                    mime="image/png"
+                )
+
+    with st.expander('Decode QR code'):
+        upload = st.file_uploader('Upload QR code', type=['png', 'jpg', 'svg'])
+        submit = st.button('Decode')
+        if upload is not None:
+            if submit:
+                code = QR(filename=upload.name)
+                code.decode()
+                st.caption('Hidden message:')
+                st.code(code.data)
+        else:
+            st.error('Upload error')
+
     return
-
 
 if __name__ == '__main__':
     main()
