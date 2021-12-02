@@ -1,7 +1,8 @@
 import streamlit as st
 import qrcode
 import random
-from qrtools import QR
+import qrtools
+
 
 st.set_page_config(page_title='QRCode Generator',
                    page_icon=':closed_lock_with_key:')
@@ -48,7 +49,7 @@ def main():
         submit = st.button('Decode')
         if upload is not None:
             if submit:
-                code = QR(filename=upload.name)
+                code = qrtools.QR(filename=upload.name)
                 code.decode()
                 st.caption('Hidden message:')
                 st.code(code.data)
