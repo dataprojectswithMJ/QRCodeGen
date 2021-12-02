@@ -2,6 +2,9 @@ import streamlit as st
 import qrcode
 import random
 
+st.set_page_config(page_title='QRCode Generator',
+                   page_icon=':closed_lock_with_key:')
+
 
 def main():
     st.image('QRcode_Gen.png')
