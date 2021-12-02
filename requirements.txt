@@ -2,5 +2,4 @@ streamlit==1.1.0
 qrcode==7.3.1
 qrtools==0.0.2
 pypng==0.0.21
-zbar==0.10
 Pillow==8.4.0
