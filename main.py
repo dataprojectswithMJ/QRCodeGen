@@ -1,6 +1,7 @@
 import streamlit as st
 import qrcode
 import random
+from qrtools import QR
 
 st.set_page_config(page_title='QRCode Generator',
                    page_icon=':closed_lock_with_key:')
