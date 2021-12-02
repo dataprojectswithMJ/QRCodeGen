@@ -1,8 +1,9 @@
 import streamlit as st
 import qrcode
 import random
-import qrtools
-
+#import qrtools import QR
+from PIL import Image
+from pyzbar.pyzbar import decode
 
 st.set_page_config(page_title='QRCode Generator',
                    page_icon=':closed_lock_with_key:')
@@ -23,6 +24,7 @@ def main():
 
     st.title("")
 
+    # st.expander()
 
     with st.expander('Generated code'):
         st.header('Generate code')
@@ -47,16 +49,19 @@ def main():
     with st.expander('Decode QR code'):
         upload = st.file_uploader('Upload QR code', type=['png', 'jpg', 'svg'])
         submit = st.button('Decode')
-        if upload is not None:
-            if submit:
-                code = qrtools.QR(filename=upload.name)
-                code.decode()
-                st.caption('Hidden message:')
-                st.code(code.data)
-        else:
-            st.error('Upload error')
+        try:
+            if upload is not None:
+                if submit:
+                    code = decode(Image.open(upload.name))
+                    st.caption('Hidden maessage')
+                    st.code(code[0].data.decode('ascii'))
+            else:
+                st.error('File not found.')
+        except:
+            pass
 
     return
+
 
 if __name__ == '__main__':
     main()
